@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bingo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--<link rel="stylesheet" href="w3.css">-->
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+        <div class="w3-padding w3-light-grey">Bingo 75</div>
+        
+        <!-- GRUPOS NUMEROS -->
+        <div class="w3-section w3-padding-16">
+            <div class="w3-container">
+                <table class="w3-table-all" border="1">
+                    <tr class="w3-black">
+                        <th style="text-align:center;width:20%"><button class="w3-button w3-block w3-black" onclick="Bingo.mostrar(1,15)">B</button></th>
+                        <th style="text-align:center;width:20%"><button class="w3-button w3-block w3-black" onclick="Bingo.mostrar(16,30)">I</button></th>
+                        <th style="text-align:center;width:20%"><button class="w3-button w3-block w3-black" onclick="Bingo.mostrar(31,45)">N</button></th>
+                        <th style="text-align:center;width:20%"><button class="w3-button w3-block w3-black" onclick="Bingo.mostrar(46,60)">G</button></th>
+                        <th style="text-align:center;width:20%"><button class="w3-button w3-block w3-black" onclick="Bingo.mostrar(61,75)">O</button></th>
+                    </tr>
+                </table>
+                <hr>
+                <div id="Grupos" class="w3-row-padding"></div>
+            </div>
+        </div>
+        <!-- -->
+        
+        <!-- LISTADO -->
+        <div id="w3Modal" class="w3-modal">
+            <div class="w3-modal-content">
+                <table class="w3-table-all" border="1">
+                    <tr class="w3-black">
+                        <th style="text-align:center;width:20%">B</th>
+                        <th style="text-align:center;width:20%">I</th>
+                        <th style="text-align:center;width:20%">N</th>
+                        <th style="text-align:center;width:20%">G</th>
+                        <th style="text-align:center;width:20%">O</th>
+                    </tr>
+                    <tr>
+                        <td class="w3-white"><ul id="Lista_B" class="w3-ul w3-center"></ul></td>
+                        <td class="w3-white"><ul id="Lista_I" class="w3-ul w3-center"></ul></td>
+                        <td class="w3-white"><ul id="Lista_N" class="w3-ul w3-center"></ul></td>
+                        <td class="w3-white"><ul id="Lista_G" class="w3-ul w3-center"></ul></td>
+                        <td class="w3-white"><ul id="Lista_O" class="w3-ul w3-center"></ul></td>                        
+                    </tr>
+                </table>
+                <br>
+                <div class="w3-container">
+                    <table class="w3-right">
+                        <tr>
+                            <td><input id="txtQuitar" name="txtQuitar" type="text" class="w3-input w3-border" 
+                                       disabled="disabled" maxlength="2" style="width:50px;text-align:center"></td>
+                            <td><button class="w3-button w3-black" onclick="Bingo.quitar()">Quitar</button></td>
+                            <td style="width:10px"></td>
+                            <td><button class="w3-button w3-black" onclick="document.getElementById('w3Modal').style.display='none'">Cerrar</button></td>
+                        </tr>
+                    </table>            
+                </div>
+                <br>
+            </div>
+        </div>
+        <!-- -->
+        <div class="w3-padding-48"></div>
+        <div class="w3-bottom w3-padding w3-black">
+            <button class="w3-button w3-left" onclick="Bingo.mostrarTodos()">Ver todos</button>
+            <button class="w3-button w3-right" onclick="Bingo.verListado()">Ver listado</button>
+        </div>
+        <script>
+            var Bingo = {
+                arrListado:[],
+                buscar:function(n){
+                    var i,c=0;
+                    for(i=0;i<this.arrListado.length;i++)
+                    {
+                        if(this.arrListado[i]===n)
+                        {
+                            c++;
+                        }
+                    }
+                    return c; //coincidencias                                        
+                },
+                llenarGrupos:function(){
+                    var i=0,txt="";
+                    for(i=1;i<=75;i++)
+                    {
+                        txt="<div id='N"+i+"' class='Grupos w3-col s2 w3-padding w3-center' onclick='Bingo.insertar("+i+")'>"+i+"</div>";
+                        document.getElementById("Grupos").innerHTML+=txt;                        
+                    }
+                },
+                insertar:function(n){
+                    if(this.buscar(n)===0)
+                    {
+                        this.arrListado.push(n);
+                    }
+                    document.getElementById("N"+n).style.backgroundColor="lightgrey";
+                },
+                
+                limpiarListado:function(){
+                    document.getElementById("Lista_B").innerHTML="";
+                    document.getElementById("Lista_I").innerHTML="";
+                    document.getElementById("Lista_N").innerHTML="";
+                    document.getElementById("Lista_G").innerHTML="";
+                    document.getElementById("Lista_O").innerHTML="";
+                },
+                escogerListado:function(n){
+                    var i,arrNumLista=document.getElementsByClassName("NumLista");
+                    for(i=0;i<arrNumLista.length;i++)
+                    {
+                        arrNumLista[i].style.backgroundColor="";
+                    }
+                    document.getElementById("txtQuitar").value=n;
+                    document.getElementById("L"+n).style.backgroundColor="lightgrey";
+                },                
+                verListado:function(){
+                    var i=0,e="";
+                    this.arrListado.sort(function(a, b){return a-b;});
+                    this.limpiarListado();
+                    for(i=0;i<this.arrListado.length;i++)
+                    {
+                        e="<li id='L"+this.arrListado[i]+"' class='NumLista' onclick='Bingo.escogerListado("+this.arrListado[i]+")'>"+this.arrListado[i]+"</li>";
+                        if(this.arrListado[i]<=15)
+                        {
+                            document.getElementById("Lista_B").innerHTML+=e;
+                        } else if(this.arrListado[i]<=30)
+                        {
+                            document.getElementById("Lista_I").innerHTML+=e;
+                        } else if(this.arrListado[i]<=45)
+                        {
+                            document.getElementById("Lista_N").innerHTML+=e;
+                        } else if(this.arrListado[i]<=60)
+                        {
+                            document.getElementById("Lista_G").innerHTML+=e;
+                        } else if(this.arrListado[i]<=75)
+                        {
+                            document.getElementById("Lista_O").innerHTML+=e;
+                        }                        
+                    }
+                    document.getElementById("w3Modal").style.display='block';
+                },
+                quitar:function(){
+                    var i,arr=[],n=document.getElementById("txtQuitar").value*1;
+                    for(i=0;i<this.arrListado.length;i++)
+                    {
+                        if(this.arrListado[i]!==n)
+                        {
+                            arr.push(this.arrListado[i]);
+                        }
+                    }
+                    this.arrListado=arr;
+                    document.getElementById("N"+n).style.backgroundColor="";
+                    this.verListado();
+                },
+                mostrar:function(d,h){
+                    var i,n,arrGrupos=document.getElementsByClassName("Grupos");
+                    for(i=0;i<arrGrupos.length;i++)
+                    {
+                        n=arrGrupos[i].innerHTML*1;
+                        if(n>=d && n<=h)
+                        {
+                            arrGrupos[i].style.display='block';
+                        }
+                        else
+                        {
+                            arrGrupos[i].style.display='none';
+                        }                        
+                    }
+                },
+                mostrarTodos:function(){
+                    var i,arrGrupos=document.getElementsByClassName("Grupos");
+                    for(i=0;i<arrGrupos.length;i++)
+                    {
+                        arrGrupos[i].style.display='block';
+                    }
+                }
+            };
+            
+            window.onload=function(){
+                Bingo.llenarGrupos();                
+            };
+        </script>       
+    </body>
+</html>
+
