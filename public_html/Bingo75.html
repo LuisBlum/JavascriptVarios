@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Bingo</title>
+        <title>Bingo75</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--<link rel="stylesheet" href="w3.css">-->
@@ -13,13 +13,13 @@
         <!-- GRUPOS NUMEROS -->
         <div class="w3-section w3-padding-16">
             <div class="w3-container">
-                <table class="w3-table-all" border="1">
-                    <tr class="w3-black">
-                        <th style="text-align:center;width:20%"><button class="w3-button w3-block w3-black" onclick="Bingo.mostrar(1,15)">B</button></th>
-                        <th style="text-align:center;width:20%"><button class="w3-button w3-block w3-black" onclick="Bingo.mostrar(16,30)">I</button></th>
-                        <th style="text-align:center;width:20%"><button class="w3-button w3-block w3-black" onclick="Bingo.mostrar(31,45)">N</button></th>
-                        <th style="text-align:center;width:20%"><button class="w3-button w3-block w3-black" onclick="Bingo.mostrar(46,60)">G</button></th>
-                        <th style="text-align:center;width:20%"><button class="w3-button w3-block w3-black" onclick="Bingo.mostrar(61,75)">O</button></th>
+                <table class="w3-table-all">
+                    <tr>
+                        <th style="width:20%"><button class="w3-button w3-block w3-black w3-card-4" onclick="Bingo.mostrar(1,15)">B</button></th>
+                        <th style="width:20%"><button class="w3-button w3-block w3-black w3-card-4" onclick="Bingo.mostrar(16,30)">I</button></th>
+                        <th style="width:20%"><button class="w3-button w3-block w3-black w3-card-4" onclick="Bingo.mostrar(31,45)">N</button></th>
+                        <th style="width:20%"><button class="w3-button w3-block w3-black w3-card-4" onclick="Bingo.mostrar(46,60)">G</button></th>
+                        <th style="width:20%"><button class="w3-button w3-block w3-black w3-card-4" onclick="Bingo.mostrar(61,75)">O</button></th>
                     </tr>
                 </table>
                 <hr>
@@ -86,7 +86,7 @@
                     var i=0,txt="";
                     for(i=1;i<=75;i++)
                     {
-                        txt="<div id='N"+i+"' class='Grupos w3-col s2 w3-padding w3-center' onclick='Bingo.insertar("+i+")'>"+i+"</div>";
+                        txt="<div id='N"+i+"' class='Grupos w3-col s2 w3-padding w3-center w3-border' onclick='Bingo.insertar("+i+")'>"+i+"</div>";
                         document.getElementById("Grupos").innerHTML+=txt;                        
                     }
                 },
@@ -120,7 +120,7 @@
                     this.limpiarListado();
                     for(i=0;i<this.arrListado.length;i++)
                     {
-                        e="<li id='L"+this.arrListado[i]+"' class='NumLista' onclick='Bingo.escogerListado("+this.arrListado[i]+")'>"+this.arrListado[i]+"</li>";
+                        e="<li id='L"+this.arrListado[i]+"' class='NumLista w3-border' onclick='Bingo.escogerListado("+this.arrListado[i]+")'>"+this.arrListado[i]+"</li>";
                         if(this.arrListado[i]<=15)
                         {
                             document.getElementById("Lista_B").innerHTML+=e;
